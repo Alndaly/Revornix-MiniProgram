@@ -1,30 +1,58 @@
 {
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/index",
 			"style": {
 				"navigationBarTitleText": "uni-app"
 			}
+		},
+		{
+			"path": "pages/coach/list/index"
+		},
+		{
+			"path": "pages/appointment/index",
+			"enablePullDownRefresh": false
+		},
+		{
+			"path": "pages/user/index"
 		}
 	],
 	"subpackages": [
 		{
 			"root": "adminPages",
-			"pages": []
+			"pages": [
+				{
+					"path": "index",
+					"style": {
+						"navigationBarTitleText": "",
+						"enablePullDownRefresh": false
+					}
+				}
+			]
 		},
 		{
 			"root": "chartPages",
-			"pages": []
+			"pages": [
+				{
+					"path": "memberCard/index",
+					"style": {
+						"navigationStyle": "default",
+						"navigationBarTitleText": "会员卡报表",
+						"navigationBarBackgroundColor": "#F8F8F8",
+						"navigationBarTextStyle": "black"
+					}
+				}
+			]
 		}
 	],
 	"tabBar": {
 		"custom": true,
 		"list": [
 			{
-				"pagePath": "pages/index/index"
+				"pagePath": "pages/index"
 			},
 			{
-				"pagePath": "pages/coach/list"
+				"pagePath": "pages/coach/list/index"
 			},
 			{
 				"pagePath": "pages/appointment/index"
@@ -40,5 +68,5 @@
 		"navigationBarTitleText": "健身预约",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	},
+	}
 }

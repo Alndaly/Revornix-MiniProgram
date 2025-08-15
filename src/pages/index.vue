@@ -2,17 +2,25 @@
   <view class="content">
     <image class="logo" src="/static/logo.png" />
     <view class="text-area">
-      <text class="title">{{ title }}</text>
+      <text class="title" @click="handleNavigate">{{ title }}</text>
     </view>
+    <custom-tab-bar />
   </view>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const title = ref('Hello')
+import customTabBar from '@/components/customTabBar/index.vue';
+import { ref } from 'vue';
+const title = ref('Hello');
+
+const handleNavigate = () => {
+  uni.switchTab({
+    url: '/pages/appointment/index',
+  });
+};
 </script>
 
-<style>
+<style scoped>
 .content {
   display: flex;
   flex-direction: column;
