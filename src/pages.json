@@ -15,6 +15,9 @@
 		},
 		{
 			"path": "pages/user/index"
+		},
+		{
+			"path": "pages/user/appointment/index"
 		}
 	],
 	"subpackages": [
@@ -56,6 +59,9 @@
 			},
 			{
 				"pagePath": "pages/appointment/index"
+			},
+			{
+				"pagePath": "pages/user/appointment/index"
 			},
 			{
 				"pagePath": "pages/user/index"

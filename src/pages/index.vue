@@ -1,11 +1,9 @@
 <template>
-  <view class="content">
-    <image class="logo" src="/static/logo.png" />
-    <view class="text-area">
-      <text class="title" @click="handleNavigate">{{ title }}</text>
-    </view>
-    <custom-tab-bar />
+  <image class="logo" src="/static/logo.png" />
+  <view class="text-area">
+    <text class="title" @click="handleNavigate">{{ title }}</text>
   </view>
+  <custom-tab-bar />
 </template>
 
 <script setup lang="ts">
@@ -21,12 +19,6 @@ const handleNavigate = () => {
 </script>
 
 <style scoped>
-.content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
 
 .logo {
   height: 200rpx;
