@@ -1,77 +1,34 @@
 {
 	"pages": [
 		{
-			"path": "pages/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
+			"path": "pages/document/index"
 		},
 		{
-			"path": "pages/coach/list/index"
+			"path": "pages/section/index"
 		},
 		{
-			"path": "pages/appointment/index",
-			"enablePullDownRefresh": false
-		},
-		{
-			"path": "pages/user/index"
-		},
-		{
-			"path": "pages/user/appointment/index"
+			"path": "pages/mine/index"
 		}
 	],
-	"subpackages": [
-		{
-			"root": "adminPages",
-			"pages": [
-				{
-					"path": "index",
-					"style": {
-						"navigationBarTitleText": "",
-						"enablePullDownRefresh": false
-					}
-				}
-			]
-		},
-		{
-			"root": "chartPages",
-			"pages": [
-				{
-					"path": "memberCard/index",
-					"style": {
-						"navigationStyle": "default",
-						"navigationBarTitleText": "会员卡报表",
-						"navigationBarBackgroundColor": "#F8F8F8",
-						"navigationBarTextStyle": "black"
-					}
-				}
-			]
-		}
-	],
+	"subpackages": [],
 	"tabBar": {
 		"custom": true,
 		"list": [
 			{
-				"pagePath": "pages/index"
+				"pagePath": "pages/document/index"
 			},
 			{
-				"pagePath": "pages/coach/list/index"
+				"pagePath": "pages/section/index"
 			},
 			{
-				"pagePath": "pages/appointment/index"
-			},
-			{
-				"pagePath": "pages/user/appointment/index"
-			},
-			{
-				"pagePath": "pages/user/index"
+				"pagePath": "pages/mine/index"
 			}
 		]
 	},
 	"globalStyle": {
 		"navigationStyle": "custom",
 		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "健身预约",
+		"navigationBarTitleText": "Revornix",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	}

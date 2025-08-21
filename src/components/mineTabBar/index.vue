@@ -1,5 +1,5 @@
 <template>
-    <view class="custom-tab-bar">
+    <view class="mine-tab-bar">
         <view v-for="(tab, index) in tabs" :key='index' class="tab-item" @click='onSwitchTab(index)'>
             <img :src="tab.iconPath" alt="" mode="aspectFit" v-if='tabStore.selected !== index' class='icon' />
             <img :src="tab.selectedIconPath" mode="aspectFit" alt="" class='icon' v-else />
@@ -15,34 +15,22 @@ const tabStore = useTabStore()
 
 const tabs = ref([
     {
-        pagePath: "/pages/index",
-        text: '首页',
-        iconPath: '/static/icon/tabBar/1.png',
-        selectedIconPath: '/static/icon/tabBar/1_on.png'
+        pagePath: "/pages/document/index",
+        text: 'Documents',
+        iconPath: '/static/icon/tabBar/document.png',
+        selectedIconPath: '/static/icon/tabBar/document_on.png'
     },
     {
-        pagePath: "/pages/coach/list/index",
-        text: '教练',
-        iconPath: '/static/icon/tabBar/2.png',
-        selectedIconPath: '/static/icon/tabBar/2_on.png'
+        pagePath: "/pages/section/index",
+        text: 'Section',
+        iconPath: '/static/icon/tabBar/section.png',
+        selectedIconPath: '/static/icon/tabBar/section_on.png'
     },
     {
-        pagePath: "/pages/appointment/index",
-        text: '',
-        iconPath: '/static/icon/tabBar/3.png',
-        selectedIconPath: '/static/icon/tabBar/3_on.png'
-    },
-    {
-        pagePath: "/pages/user/appointment/index",
-        text: '预约',
-        iconPath: '/static/icon/tabBar/4.png',
-        selectedIconPath: '/static/icon/tabBar/4_on.png'
-    },
-    {
-        pagePath: '/pages/user/index',
-        text: '我的',
-        iconPath: '/static/icon/tabBar/5.png',
-        selectedIconPath: '/static/icon/tabBar/5_on.png'
+        pagePath: '/pages/mine/index',
+        text: 'Mine',
+        iconPath: '/static/icon/tabBar/mine.png',
+        selectedIconPath: '/static/icon/tabBar/mine_on.png'
 
     },
 ])
@@ -54,7 +42,7 @@ const onSwitchTab = (index: number) => {
 
 </script>
 <style scoped lang='scss'>
-.custom-tab-bar {
+.mine-tab-bar {
     padding-top: 10rpx;
     width: 100vw;
     pointer-events: auto;

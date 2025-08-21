@@ -54,7 +54,7 @@
     "@miniprogram-component-plus/col": "^1.0.0",
     "@miniprogram-component-plus/row": "^1.0.0",
     "pinia": "^3.0.3",
-    "vue": "^3.4.21",
+    "vue": "^3.5.19",
     "vue-i18n": "^9.1.9"
   },
   "devDependencies": {

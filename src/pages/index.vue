@@ -1,13 +1,12 @@
 <template>
+  <custom-header />
   <image class="logo" src="/static/logo.png" />
   <view class="text-area">
     <text class="title" @click="handleNavigate">{{ title }}</text>
   </view>
-  <custom-tab-bar />
 </template>
 
 <script setup lang="ts">
-import customTabBar from '@/components/customTabBar/index.vue';
 import { ref } from 'vue';
 const title = ref('Hello');
 
@@ -19,7 +18,6 @@ const handleNavigate = () => {
 </script>
 
 <style scoped>
-
 .logo {
   height: 200rpx;
   width: 200rpx;
