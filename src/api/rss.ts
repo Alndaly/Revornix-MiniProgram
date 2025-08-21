@@ -1,10 +1,10 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base"
 
 export default {
-    createRssServer: API_PREFIX + '/rss/add',
-    deleteRssServer: API_PREFIX + '/rss/delete',
-    searchMineRssServer: API_PREFIX + '/rss/search',
-    updateRssServer: API_PREFIX + '/rss/update',
-    getRssServerDetail: API_PREFIX + '/rss/detail',
-    searchRssDocuments: API_PREFIX + '/rss/document',
+    createRssServer: URL.API_URL + '/rss/add',
+    deleteRssServer: URL.API_URL + '/rss/delete',
+    searchMineRssServer: URL.API_URL + '/rss/search',
+    updateRssServer: URL.API_URL + '/rss/update',
+    getRssServerDetail: URL.API_URL + '/rss/detail',
+    searchRssDocuments: URL.API_URL + '/rss/document',
 }

@@ -1,23 +1,23 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base"
 
 export default {
-    createDocument: API_PREFIX + '/document/create',
-    createLabel: API_PREFIX + '/document/label/create',
-    listLabel: API_PREFIX + '/document/label/list',
-    searchUserUnreadDocument: API_PREFIX + '/document/unread/search',
-    searchUserRecentReadDocument: API_PREFIX + '/document/recent/search',
-    documentDetail: API_PREFIX + '/document/detail',
-    starDocument: API_PREFIX + '/document/star',
-    readDocument: API_PREFIX + '/document/read',
-    deleteDocument: API_PREFIX + '/document/delete',
-    searchMyDocuments: API_PREFIX + '/document/search/mine',
-    searchStarDocument: API_PREFIX + '/document/star/search',
-    searchDocumentVector: API_PREFIX + '/document/vector/search',
-    summaryMonthDocumentCount: API_PREFIX + '/document/month/summary',
-    searchDocumentNotes: API_PREFIX + '/document/note/search',
-    createDocumentNote: API_PREFIX + '/document/note/create',
-    deleteDocumentNotes: API_PREFIX + '/document/note/delete',
-    transformToMarkdown: API_PREFIX + '/document/markdown/transform',
-    summaryContent: API_PREFIX + '/document/ai/summary',
-    getDocumentLabelSummary: API_PREFIX + '/document/label/summary'
+    createDocument: URL.API_URL + '/document/create',
+    createLabel: URL.API_URL + '/document/label/create',
+    listLabel: URL.API_URL + '/document/label/list',
+    searchUserUnreadDocument: URL.API_URL + '/document/unread/search',
+    searchUserRecentReadDocument: URL.API_URL + '/document/recent/search',
+    documentDetail: URL.API_URL + '/document/detail',
+    starDocument: URL.API_URL + '/document/star',
+    readDocument: URL.API_URL + '/document/read',
+    deleteDocument: URL.API_URL + '/document/delete',
+    searchMyDocuments: URL.API_URL + '/document/search/mine',
+    searchStarDocument: URL.API_URL + '/document/star/search',
+    searchDocumentVector: URL.API_URL + '/document/vector/search',
+    summaryMonthDocumentCount: URL.API_URL + '/document/month/summary',
+    searchDocumentNotes: URL.API_URL + '/document/note/search',
+    createDocumentNote: URL.API_URL + '/document/note/create',
+    deleteDocumentNotes: URL.API_URL + '/document/note/delete',
+    transformToMarkdown: URL.API_URL + '/document/markdown/transform',
+    summaryContent: URL.API_URL + '/document/ai/summary',
+    getDocumentLabelSummary: URL.API_URL + '/document/label/summary'
 } 

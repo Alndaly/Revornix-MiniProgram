@@ -1,15 +1,15 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base";
 
 export default {
-    askAi: API_PREFIX + '/ai/ask',
-    createAiModel: API_PREFIX + '/ai/model/create',
-    createAiModelProvider: API_PREFIX + '/ai/model-provider/create',
-    deleteAiModel: API_PREFIX + '/ai/model/delete',
-    deleteAiModelProvider: API_PREFIX + '/ai/model-provider/delete',
-    searchAiModel: API_PREFIX + '/ai/model/search',
-    searchAiModelProvider: API_PREFIX + '/ai/model-provider/search',
-    updateAiModel: API_PREFIX + '/ai/model/update',
-    updateAiModelProvider: API_PREFIX + '/ai/model-provider/update',
-    getAiModelDetail: API_PREFIX + '/ai/model/detail',
-    getAiModelProviderDetail: API_PREFIX + '/ai/model-provider/detail',
+    askAi: URL.API_URL + '/ai/ask',
+    createAiModel: URL.API_URL + '/ai/model/create',
+    createAiModelProvider: URL.API_URL + '/ai/model-provider/create',
+    deleteAiModel: URL.API_URL + '/ai/model/delete',
+    deleteAiModelProvider: URL.API_URL + '/ai/model-provider/delete',
+    searchAiModel: URL.API_URL + '/ai/model/search',
+    searchAiModelProvider: URL.API_URL + '/ai/model-provider/search',
+    updateAiModel: URL.API_URL + '/ai/model/update',
+    updateAiModelProvider: URL.API_URL + '/ai/model-provider/update',
+    getAiModelDetail: URL.API_URL + '/ai/model/detail',
+    getAiModelProviderDetail: URL.API_URL + '/ai/model-provider/detail',
 } 

@@ -1,9 +1,9 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base"
 
 export default {
-    getMineEngines: API_PREFIX + '/engine/mine',
-    getProvideEngines: API_PREFIX + '/engine/provide',
-    installEngine: API_PREFIX + '/engine/install',
-    updateEngine: API_PREFIX + '/engine/update',
-    deleteEngine: API_PREFIX + '/engine/delete',
+    getMineEngines: URL.API_URL + '/engine/mine',
+    getProvideEngines: URL.API_URL + '/engine/provide',
+    installEngine: URL.API_URL + '/engine/install',
+    updateEngine: URL.API_URL + '/engine/update',
+    deleteEngine: URL.API_URL + '/engine/delete',
 }

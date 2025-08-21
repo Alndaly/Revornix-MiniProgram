@@ -1,7 +1,7 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base";
 
 export default {
-    createApiKey: API_PREFIX + '/api-key/create',
-    deleteApiKey: API_PREFIX + '/api-key/delete',
-    searchApiKey: API_PREFIX + '/api-key/search'
+    createApiKey: URL.API_URL + '/api-key/create',
+    deleteApiKey: URL.API_URL + '/api-key/delete',
+    searchApiKey: URL.API_URL + '/api-key/search'
 }

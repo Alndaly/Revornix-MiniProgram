@@ -1,5 +1,5 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base"
 
 export default {
-    getCeleryTaskStatus: API_PREFIX + '/celery/task/status',
+    getCeleryTaskStatus: URL.API_URL + '/celery/task/status',
 }

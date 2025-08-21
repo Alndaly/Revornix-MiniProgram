@@ -1,9 +1,9 @@
-import { API_PREFIX } from "@/config/api"
+import { URL } from "@/config/base"
 
 export default {
-    createMCPServer: API_PREFIX + '/mcp/server/create',
-    updateMCPServer: API_PREFIX + '/mcp/server/update',
-    deleteMCPServer: API_PREFIX + '/mcp/server/delete',
-    searchMCPServer: API_PREFIX + '/mcp/server/search',
-    getMCPServerDetail: API_PREFIX + '/mcp/server/detail',
+    createMCPServer: URL.API_URL + '/mcp/server/create',
+    updateMCPServer: URL.API_URL + '/mcp/server/update',
+    deleteMCPServer: URL.API_URL + '/mcp/server/delete',
+    searchMCPServer: URL.API_URL + '/mcp/server/search',
+    getMCPServerDetail: URL.API_URL + '/mcp/server/detail',
 }
