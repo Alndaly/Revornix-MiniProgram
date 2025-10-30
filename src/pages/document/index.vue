@@ -10,6 +10,10 @@ import type { DocumentInfo } from '@/generated';
 import { searchAllMyDocument } from '@/service/document';
 import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+import { useTabStore } from '@/store/tab'
+
+const tabStore = useTabStore()
+tabStore.selected = 0
 
 let start = ref<number | null>(null);
 let limit = ref(10);

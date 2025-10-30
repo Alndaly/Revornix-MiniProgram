@@ -14,6 +14,10 @@ import type { PrivateUserInfo } from '@/generated';
 import { getMyInfo } from '@/service/user';
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
+import { useTabStore } from '@/store/tab'
+
+const tabStore = useTabStore()
+tabStore.selected = 2
 
 let myInfo = ref<PrivateUserInfo | null>(null);
 
