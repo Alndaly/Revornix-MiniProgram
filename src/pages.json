@@ -1,13 +1,25 @@
 {
 	"pages": [
 		{
-			"path": "pages/document/index"
+			"path": "pages/document/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
 		},
 		{
-			"path": "pages/section/index"
+			"path": "pages/section/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
 		},
 		{
-			"path": "pages/mine/index"
+			"path": "pages/mine/index",
+			"style": {
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
 		}
 	],
 	"subpackages": [],
@@ -26,10 +38,6 @@
 		]
 	},
 	"globalStyle": {
-		"navigationStyle": "custom",
-		"navigationBarTextStyle": "white",
-		"navigationBarTitleText": "Revornix",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "Revornix"
 	}
 }

@@ -43,10 +43,12 @@ const onSwitchTab = (index: number) => {
 </script>
 <style scoped lang='scss'>
 .mine-tab-bar {
+    z-index: 100;
     padding-top: 10rpx;
     width: 100vw;
     pointer-events: auto;
-    position: absolute;
+    position: fixed;
+    background-color: white;
     left: 0;
     bottom: 0;
     display: flex;

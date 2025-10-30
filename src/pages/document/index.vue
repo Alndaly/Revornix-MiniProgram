@@ -1,33 +1,75 @@
 <template>
     <mine-tab-bar />
-    <custom-header>
-        <template #content>Documents</template>
-    </custom-header>
-    document page
-    <scroll-view scroll-y class='document-list'>111</scroll-view>
+    <scroll-view scroll-y>
+        <document-item v-for='document, idx in documents' :key='idx' :document='document' />
+    </scroll-view>
 </template>
 <script lang='ts' setup>
+import DocumentItem from '@/components/documentItem/index.vue';
+import type { DocumentInfo } from '@/generated';
 import { searchAllMyDocument } from '@/service/document';
+import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 
-const start = ref(null);
+let start = ref<number | null>(null);
 let limit = ref(10);
 let keyword = ref('');
-let label_ids = ref([]);
-let desc = ref(false);
+let desc = ref(true);
+let has_more = ref(true);
+let documents = ref<DocumentInfo[]>([]);
 
-const data = await searchAllMyDocument({
-    start: start.value,
-    limit: limit.value,
-    keyword: keyword.value,
-    label_ids: label_ids.value,
-    desc: desc.value
+onLoad(async () => {
+    const data = await searchAllMyDocument({
+        start: start.value,
+        limit: limit.value,
+        keyword: keyword.value,
+        desc: desc.value
+    })
+
+    documents.value = data.elements
+    has_more.value = data.has_more
+    if (data.next_start) {
+        start.value = data.next_start
+    }
+})
+
+onPullDownRefresh(async () => {
+    console.log('下拉刷新')
+    start.value = null
+    has_more.value = true
+
+    const data = await searchAllMyDocument({
+        start: start.value,
+        limit: limit.value,
+        keyword: keyword.value,
+        desc: desc.value
+    })
+
+    documents.value = data.elements
+    has_more.value = data.has_more
+    if (data.next_start) {
+        start.value = data.next_start
+    }
+    uni.stopPullDownRefresh()
+})
+
+onReachBottom(async () => {
+    console.log('上拉触底')
+    if (!has_more.value) {
+        return
+    }
+    const data = await searchAllMyDocument({
+        start: start.value,
+        limit: limit.value,
+        keyword: keyword.value,
+        desc: desc.value
+    })
+
+    documents.value = documents.value.concat(data.elements)
+    has_more.value = data.has_more
+    if (data.next_start) {
+        start.value = data.next_start
+    }
 })
 
 </script>
-<style lang='scss'>
-.document-list {
-    background-color: aqua;
-    height: 100%;
-}
-</style>

@@ -1,5 +1,4 @@
 <template>
-  <custom-header />
   <image class="logo" src="/static/logo.png" />
   <view class="text-area">
     <text class="title" @click="handleNavigate">{{ title }}</text>

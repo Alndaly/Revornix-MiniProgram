@@ -1,5 +1,6 @@
 import cache from "./cache";
 import { URL } from "../config/base";
+import type { TokenResponse } from "@/generated";
 
 // 定义请求参数接口
 interface RequestParams {
@@ -12,14 +13,6 @@ interface RequestParams {
     success?: (result: any) => void;
     fail?: (error: any) => void;
     complete?: () => void;
-}
-
-// 定义API响应接口
-interface ApiResponse<T = any> {
-    data?: T;
-    code: number;
-    message: string;
-    [key: string]: any;
 }
 
 // Token管理状态接口
@@ -50,7 +43,7 @@ function requiresAuth(url: string): boolean {
 }
 
 // 处理token过期或无token情况
-function handleTokenIssue(params: RequestParams): Promise<any> {
+function handleTokenIssue(params: RequestParams): Promise<null> {
     // 将当前请求加入订阅队列
     return new Promise((resolve) => {
         addSubscriber(() => {
@@ -98,23 +91,26 @@ export const request = function (args: RequestParams): Promise<any> {
         uni.request({
             header,
             ...args,
-            success: (res: any) => {
-                console.log("请求结果:", res, "参数:", args);
+            success: (res) => {
                 if (res.statusCode === 401) {
-                    console.log(222)
                     resolve(handleTokenIssue(args));
                     return;
+                } else if (res.statusCode >= 300) {
+                    reject(res.errMsg);
+                    return;
                 }
-                resolve(res);
+                resolve(res.data);
             },
-            fail: (err: any) => {
-                console.error("请求失败:", err, "参数:", args);
-                reject(err);
+            fail: (err) => {
+                reject(err.errMsg);
                 uni.showToast({
-                    title: "网络出错",
+                    title: err.errMsg ? err.errMsg : "请求失败",
                     icon: "error",
                 });
             },
+            complete: (res) => {
+                console.log("请求结果:", res, "参数:", args);
+            }
         });
     });
 };
@@ -156,13 +152,18 @@ async function getToken(): Promise<void> {
         });
         console.log("获取个人唯一识别Token: ", res_token);
 
+        if (res_token.statusCode !== 200) {
+            throw new Error(`获取Token失败, ${res_token.errMsg ? res_token.errMsg : "未知错误"}`);
+        }
+
+        const res_token_data = res_token.data as TokenResponse;
         // 存储Token
         cache.set(
             "access_token",
-            res_token.data.access_token,
-            res_token.data.expires_in
+            res_token_data.access_token,
+            res_token_data.expires_in
         );
-        cache.set("refresh_token", res_token.data.refresh_token);
+        cache.set("refresh_token", res_token_data.refresh_token);
 
         console.log("Token获取完成");
         tokenState.hasToken = true;
@@ -204,25 +205,24 @@ async function updateToken(): Promise<void> {
         });
 
         console.log("Token刷新结果:", res_token);
-        const response: ApiResponse = res_token.data;
 
-        if (response.code === 20003 && response.message === "请重新登录") {
-            console.log("刷新Token失败，需要重新登录");
-            showReloginModal();
-        } else if (response.code === 20000) {
+        if (res_token.statusCode === 200) {
             // 存储新的Token
             cache.set(
                 "access_token",
-                response.data.access_token,
-                response.data.expires_in
+                res_token.data.access_token,
+                res_token.data.expires_in
             );
-            cache.set("refresh_token", response.data.refresh_token);
+            cache.set("refresh_token", res_token.data.refresh_token);
 
             console.log("Token更新完成");
             tokenState.hasToken = true;
 
             // 执行所有等待的请求
             onAccessTokenFetched();
+        } else if (res_token.statusCode === 401) {
+            console.log("Token更新失败，需要重新登录");
+            showReloginModal();
         } else {
             console.error("刷新Token未知错误", res_token);
         }
