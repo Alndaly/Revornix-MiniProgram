@@ -1,6 +1,7 @@
 import { URL } from "@/config/base"
 
 export default {
+    searchUser: URL.API_URL + '/user/search',
     getUserFans: URL.API_URL + '/user/fans',
     getUserFollows: URL.API_URL + '/user/follows',
     createEmailCode: URL.API_URL + '/user/create/email/code',
@@ -21,5 +22,19 @@ export default {
     updateDefaultModel: URL.API_URL + '/user/default-model/update',
     updateDefaultEngine: URL.API_URL + '/user/default-engine/update',
     updateDefaultReadMarkReason: URL.API_URL + '/user/read-mark-reason/update',
-    updateDefaultFileSystem: URL.API_URL + '/user/default-file-system/update'
+    updateDefaultFileSystem: URL.API_URL + '/user/default-file-system/update',
+    createUserByGoogle: URL.API_URL + '/user/create/google',
+    createUserByGithub: URL.API_URL + '/user/create/github',
+    bindGitHub: URL.API_URL + '/user/bind/github',
+    bindGoogle: URL.API_URL + '/user/bind/google',
+    unBindGitHub: URL.API_URL + '/user/unbind/github',
+    unBindGoogle: URL.API_URL + '/user/unbind/google',
+    createSMSCode: URL.API_URL + '/user/create/sms/code',
+    createSMSUserVerify: URL.API_URL + '/user/create/sms/verify',
+    bindPhoneCode: URL.API_URL + '/user/bind/phone/code',
+    bindPhoneVerify: URL.API_URL + '/user/bind/phone/verify',
+    unBindPhone: URL.API_URL + '/user/unbind/phone',
+    createUserByWechat: URL.API_URL + '/user/create/wechat',
+    bindWeChat: URL.API_URL + '/user/bind/wechat',
+    unBindWeChat: URL.API_URL + '/user/unbind/wechat',
 } 

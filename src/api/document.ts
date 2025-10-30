@@ -7,6 +7,7 @@ export default {
     searchUserUnreadDocument: URL.API_URL + '/document/unread/search',
     searchUserRecentReadDocument: URL.API_URL + '/document/recent/search',
     documentDetail: URL.API_URL + '/document/detail',
+    updateDocument: URL.API_URL + '/document/update',
     starDocument: URL.API_URL + '/document/star',
     readDocument: URL.API_URL + '/document/read',
     deleteDocument: URL.API_URL + '/document/delete',
