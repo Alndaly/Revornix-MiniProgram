@@ -100,13 +100,11 @@ export const request = function (args: RequestParams): Promise<any> {
             ...args,
             success: (res: any) => {
                 console.log("请求结果:", res, "参数:", args);
-                const response: ApiResponse = res.data;
-
-                if (response.code === 401) {
+                if (res.statusCode === 401) {
+                    console.log(222)
                     resolve(handleTokenIssue(args));
                     return;
                 }
-
                 resolve(res);
             },
             fail: (err: any) => {
@@ -150,7 +148,7 @@ async function getToken(): Promise<void> {
         });
 
         const res_token = await uni.request({
-            url: URL.API_URL + "/user/login/wechat-miniprogram",
+            url: URL.API_URL + "/user/create/wechat/mini",
             data: {
                 code: loginResult.code,
             },
@@ -158,15 +156,13 @@ async function getToken(): Promise<void> {
         });
         console.log("获取个人唯一识别Token: ", res_token);
 
-        const response: ApiResponse = res_token.data;
-
         // 存储Token
         cache.set(
             "access_token",
-            response.data.access_token,
-            response.data.expires_in
+            res_token.data.access_token,
+            res_token.data.expires_in
         );
-        cache.set("refresh_token", response.data.refresh_token);
+        cache.set("refresh_token", res_token.data.refresh_token);
 
         console.log("Token获取完成");
         tokenState.hasToken = true;
