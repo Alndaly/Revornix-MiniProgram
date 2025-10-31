@@ -9,6 +9,14 @@
 			}
 		},
 		{
+			"path": "pages/document/create/index",
+			"style": {
+				"navigationBarTitleText": "创建文档",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
 			"path": "pages/section/index",
 			"style": {
 				"navigationBarTitleText": "专栏",
