@@ -16,19 +16,19 @@ const tabStore = useTabStore()
 const tabs = ref([
     {
         pagePath: "/pages/document/index",
-        text: 'Documents',
+        text: '文档',
         iconPath: '/static/icon/tabBar/document.png',
         selectedIconPath: '/static/icon/tabBar/document_on.png'
     },
     {
         pagePath: "/pages/section/index",
-        text: 'Section',
+        text: '专栏',
         iconPath: '/static/icon/tabBar/section.png',
         selectedIconPath: '/static/icon/tabBar/section_on.png'
     },
     {
         pagePath: '/pages/mine/index',
-        text: 'Mine',
+        text: '我的',
         iconPath: '/static/icon/tabBar/mine.png',
         selectedIconPath: '/static/icon/tabBar/mine_on.png'
 
@@ -36,7 +36,7 @@ const tabs = ref([
 ])
 
 const onSwitchTab = (index: number) => {
-    tabStore.selected = index
+    tabStore.switchTab(index)
     uni.switchTab({ url: tabs.value[index].pagePath })
 }
 

@@ -1,5 +1,5 @@
 <template>
-    <view class="document-item">
+    <view class="document-item" @click='onNavigateToDetail()'>
         <view class="title">{{ document.title }}</view>
         <view class="description">{{ document.description }}</view>
         <view class="content">
@@ -16,11 +16,16 @@ const props = defineProps<{
 }>()
 
 const { document } = props
+
+const onNavigateToDetail = () => {
+    uni.navigateTo({
+        url: `/pages/document/detail/index?id=${document.id}`
+    })
+}
 </script>
 
 <style scoped lang="scss">
 .document-item {
-    padding: 20rpx;
 
     .title {
         font-weight: bold;

@@ -1,7 +1,9 @@
 <template>
     <mine-tab-bar />
-    <scroll-view scroll-y>
-        <document-item v-for='document, idx in documents' :key='idx' :document='document' />
+    <scroll-view scroll-y class='document-list'>
+        <view v-for="(document, idx) in documents" :key="idx" class="document-wrapper">
+            <document-item :document="document" />
+        </view>
     </scroll-view>
 </template>
 <script lang='ts' setup>
@@ -13,7 +15,7 @@ import { ref } from 'vue';
 import { useTabStore } from '@/store/tab'
 
 const tabStore = useTabStore()
-tabStore.selected = 0
+tabStore.switchTab(0)
 
 let start = ref<number | null>(null);
 let limit = ref(10);
@@ -77,3 +79,22 @@ onReachBottom(async () => {
 })
 
 </script>
+
+<style lang='scss'>
+.document-list {
+    box-sizing: border-box;
+    width: 100vw;
+    padding: 20rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    .document-wrapper {
+        margin-bottom: 20rpx;
+    }
+
+    .document-wrapper:last-child {
+        margin-bottom: 0;
+    }
+}
+</style>

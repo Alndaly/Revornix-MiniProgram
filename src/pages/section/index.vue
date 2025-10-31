@@ -13,7 +13,7 @@ import SectionItem from '@/components/sectionItem/index.vue'
 import { useTabStore } from '@/store/tab'
 
 const tabStore = useTabStore()
-tabStore.selected = 1
+tabStore.switchTab(1)
 
 let start = ref<number | null>(null);
 let limit = ref(10);

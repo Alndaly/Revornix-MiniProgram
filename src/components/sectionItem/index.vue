@@ -1,5 +1,5 @@
 <template>
-    <view class="section-item">
+    <view class="section-item" @click='onNavigateToDetail()'>
         <view class="title">{{ section.title }}</view>
         <view class="description">{{ section.description }}</view>
         <view class="content">
@@ -16,6 +16,12 @@ const props = defineProps<{
 }>()
 
 const { section } = props
+
+const onNavigateToDetail = () => {
+    uni.navigateTo({
+        url: `/pages/section/detail/index?id=${section.id}`
+    })
+}
 </script>
 
 <style scoped lang="scss">

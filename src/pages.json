@@ -3,6 +3,7 @@
 		{
 			"path": "pages/document/index",
 			"style": {
+				"navigationBarTitleText": "文档",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 100
 			}
@@ -10,6 +11,7 @@
 		{
 			"path": "pages/section/index",
 			"style": {
+				"navigationBarTitleText": "专栏",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 100
 			}
@@ -17,6 +19,31 @@
 		{
 			"path": "pages/mine/index",
 			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/document/detail/index",
+			"style": {
+				"navigationBarTitleText": "文档详情",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/section/detail/index",
+			"style": {
+				"navigationBarTitleText": "专栏详情",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/test/index",
+			"style": {
+				"navigationBarTitleText": "测试",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 100
 			}
@@ -38,6 +65,9 @@
 		]
 	},
 	"globalStyle": {
-		"navigationBarTitleText": "Revornix"
+		"navigationBarTitleText": "Revornix",
+		"usingComponents": {
+			"towxml": "/wxcomponents/towxml/towxml"
+		}
 	}
 }

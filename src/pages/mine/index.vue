@@ -17,7 +17,7 @@ import { ref } from 'vue';
 import { useTabStore } from '@/store/tab'
 
 const tabStore = useTabStore()
-tabStore.selected = 2
+tabStore.switchTab(2)
 
 let myInfo = ref<PrivateUserInfo | null>(null);
 

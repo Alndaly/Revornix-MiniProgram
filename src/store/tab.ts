@@ -1,7 +1,12 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
-export const useTabStore = defineStore('tab', () => {
-    const selected = ref(0)
-    return { selected }
+export const useTabStore = defineStore('tab', {
+    state: () => ({
+        selected: 0,
+    }),
+    actions: {
+        switchTab(index: number) {
+            this.selected = index
+        }
+    }
 })
