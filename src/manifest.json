@@ -1,7 +1,7 @@
 {
-    "name": "",
+    "name": "Revornix",
     "appid": "",
-    "description": "",
+    "description": "Revornix, 以 AI 为核心，连接数据、分析与分享。从海量信息中构建结构化知识，让笔记不再吃灰。",
     "versionName": "1.0.0",
     "versionCode": "100",
     "transformPx": false,
@@ -50,7 +50,7 @@
     "quickapp": {},
     /* 小程序特有相关 */
     "mp-weixin": {
-        "appid": "",
+        "appid": "wx810305d69903386d",
         "setting": {
             "urlCheck": false
         },
