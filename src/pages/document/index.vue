@@ -1,10 +1,12 @@
 <template>
     <mine-tab-bar />
-    <scroll-view scroll-y class='document-list'>
-        <view v-for="(document, idx) in documents" :key="idx" class="document-wrapper">
-            <document-item :document="document" />
-        </view>
-    </scroll-view>
+    <view class='container bg-background'>
+        <scroll-view scroll-y class='document-list'>
+            <view v-for="(document, idx) in documents" :key="idx" class="document-wrapper">
+                <document-item :document="document" />
+            </view>
+        </scroll-view>
+    </view>
 </template>
 <script lang='ts' setup>
 import DocumentItem from '@/components/documentItem/index.vue';
@@ -83,7 +85,6 @@ onReachBottom(async () => {
 <style lang='scss'>
 .document-list {
     box-sizing: border-box;
-    width: 100vw;
     padding: 20rpx;
     display: flex;
     flex-direction: column;

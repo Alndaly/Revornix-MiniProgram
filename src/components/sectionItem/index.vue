@@ -1,9 +1,11 @@
 <template>
     <view class="section-item" @click='onNavigateToDetail()'>
-        <view class="title">{{ section.title }}</view>
-        <view class="description">{{ section.description }}</view>
-        <view class="content">
-            <slot name="content" />
+        <image class='cover'
+            :src="section.cover ? section.cover : 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png'"
+            mode="aspectFill" />
+        <view class='info'>
+            <view class="title line-clamp-2">{{ section.title }}</view>
+            <view class="description">{{ section.description }}</view>
         </view>
     </view>
 </template>
@@ -26,21 +28,35 @@ const onNavigateToDetail = () => {
 
 <style scoped lang="scss">
 .section-item {
-    padding: 20rpx;
+    background-color: white;
+    padding: 30rpx;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: row;
 
-    .title {
-        font-weight: bold;
-        font-size: 30rpx;
+    .cover {
+        width: 100rpx;
+        height: 100rpx;
+        border-radius: 20rpx;
+        object-fit: cover;
+        flex-shrink: 0;
+        margin: auto 0;
+        margin-right: 30rpx;
     }
 
-    .description {
-        color: #666;
-        font-size: 26rpx;
-        margin-top: 8rpx;
-    }
+    .info {
 
-    .content {
-        margin-top: 12rpx;
+        .title {
+            font-weight: bold;
+            font-size: 30rpx;
+        }
+
+        .description {
+            color: #666;
+            font-size: 26rpx;
+            margin-top: 8rpx;
+        }
+
     }
 }
 </style>

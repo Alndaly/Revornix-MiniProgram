@@ -1,8 +1,12 @@
 <template>
     <mine-tab-bar />
-    <scroll-view scroll-y>
-        <section-item v-for='section, idx in sections' :key='idx' :section='section' />
-    </scroll-view>
+    <view class='container bg-background'>
+        <scroll-view scroll-y class='section-list'>
+            <view v-for="(section, idx) in sections" :key="idx" class="section-wrapper">
+                <section-item :section="section" />
+            </view>
+        </scroll-view>
+    </view>
 </template>
 <script lang='ts' setup>
 import type { SectionInfo } from '@/generated';
@@ -77,3 +81,20 @@ onReachBottom(async () => {
 })
 
 </script>
+<style lang="scss">
+.section-list {
+    box-sizing: border-box;
+    padding: 20rpx;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+
+    .section-wrapper {
+        margin-bottom: 20rpx;
+    }
+
+    .section-wrapper:last-child {
+        margin-bottom: 0;
+    }
+}
+</style>
