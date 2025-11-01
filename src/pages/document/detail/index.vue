@@ -1,7 +1,7 @@
 <template>
-    <div class="page-container">
+    <div class="container bg-background">
         <div class="description">
-            {{ documentDetail?.description }}
+            {{ documentDetail?.description ? documentDetail?.description : '该文档暂无描述' }}
         </div>
         <div class='content'>
             <towxml :nodes="markdownWxml"></towxml>
@@ -134,22 +134,26 @@ onShareTimeline(() => {
 
 </script>
 <style lang="scss">
-.page-container {
+.container {
     padding: 20rpx;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
 
     .description {
+        background-color: white;
         font-size: 28rpx;
         margin-top: 20rpx;
-        color: #666;
-        border: #666 1px solid;
-        padding: 20rpx;
+        border: #e5e5e5 1px solid;
+        padding: 30rpx;
         border-radius: 20rpx;
     }
 
     .content {
         margin-top: 20rpx;
         font-size: 28rpx;
-        color: #333;
+        padding: 30rpx;
+        background-color: white;
+        border-radius: 20rpx;
+        border: #e5e5e5 1px solid;
     }
 }
 </style>

@@ -15,12 +15,17 @@
             <wd-cell title="交流群组" is-link @click='onShowGroupCode' />
             <wd-action-sheet v-model="showGroupCode" title="交流群组" @close="onHideGroupCode">
                 <view class='code-box'>
-                    <image src="/static/wechat_group_qr.png" alt="wechat group code" class='code' />
+                    <image show-menu-by-longpress src="/static/wechat_group_qr.png" alt="wechat group code"
+                        class='code' />
                 </view>
             </wd-action-sheet>
         </view>
         <view class='extra'>
-            <wd-cell title="UUID" :value="myInfo?.uuid" center />
+            <wd-cell title="UUID" center>
+                <view class='text-sm'>
+                    {{ myInfo?.uuid }}
+                </view>
+            </wd-cell>
         </view>
     </view>
 </template>
@@ -103,7 +108,7 @@ onLoad(async () => {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20rpx;
+    padding: 30rpx;
 
     .code {
         width: 340rpx;

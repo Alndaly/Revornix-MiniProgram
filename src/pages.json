@@ -18,9 +18,7 @@
 		{
 			"path": "pages/document/create/index",
 			"style": {
-				"navigationBarTitleText": "创建文档",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 100
+				"navigationBarTitleText": "创建文档"
 			}
 		},
 		{
@@ -35,24 +33,21 @@
 			"path": "pages/mine/index",
 			"style": {
 				"navigationBarTitleText": "我的",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 100
+				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/document/detail/index",
 			"style": {
 				"navigationBarTitleText": "文档详情",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 100
+				"enablePullDownRefresh": true
 			}
 		},
 		{
 			"path": "pages/section/detail/index",
 			"style": {
 				"navigationBarTitleText": "专栏详情",
-				"enablePullDownRefresh": true,
-				"onReachBottomDistance": 100
+				"enablePullDownRefresh": true
 			}
 		},
 		{

@@ -84,10 +84,8 @@ onReachBottom(async () => {
 <style lang='scss'>
 .document-list {
     box-sizing: border-box;
-    padding: 20rpx;
     display: flex;
     flex-direction: column;
-    gap: 100px;
 
     .document-wrapper {
         margin-bottom: 20rpx;

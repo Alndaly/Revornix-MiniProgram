@@ -1,21 +1,12 @@
 <template>
-    <div class='container'>
-        <div class="form">
-            <div class='category'>
-                <div class='font-bold'>
-                    文档类型：
-                </div>
-                <div class='input text-sm'>
-                    {{ category && getDocumentCategoryLabel(category) }}
-                </div>
-            </div>
-            <div class='url'>
-                <div class='font-bold'>
-                    链接：
-                </div>
-                <div class='input text-sm'>
-                    {{ url }}
-                </div>
+    <div class='container bg-background'>
+        <div class="flex-1">
+            <div class='bg-white form rounded-lg overflow-hidden'>
+                <wd-cell-group title="文档基础信息">
+                    <wd-cell title="文档类型" :value="category && getDocumentCategoryLabel(category)" />
+                    <wd-cell title="链接" :value="url" />
+                    <wd-cell title="来源" value="wx-mini" />
+                </wd-cell-group>
             </div>
         </div>
         <button class='submit-button' @click="handleCreateDocument">创建文档</button>
@@ -23,7 +14,7 @@
 
 </template>
 <script lang="ts" setup>
-import { DocumentCategory, getDocumentCategoryLabel } from '@/enums/document';
+import { getDocumentCategoryLabel } from '@/enums/document';
 import { createDocument } from '@/service/document';
 import { onLoad } from '@dcloudio/uni-app';
 import { ref } from 'vue';
@@ -57,33 +48,13 @@ const handleCreateDocument = async () => {
 </script>
 
 <style lang='scss'>
-.text-sm {
-    font-size: 28rpx;
-}
-
-.input {
-    margin-top: 10rpx;
-    padding: 10rpx;
-    border: 1px solid #ccc;
-    border-radius: 10rpx;
-    background-color: #f4f4f4;
-}
-
-.font-bold {
-    font-weight: bold;
-}
-
 .container {
-    padding: 30rpx;
-    box-sizing: border-box;
-    word-break: break-all;
-    height: 100vh;
     display: flex;
     flex-direction: column;
-    padding-bottom: calc(env(safe-area-inset-bottom) + 10rpx);
+    padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
 
     .form {
-        flex: 1;
+        padding: 20rpx;
 
         .category {
             margin-bottom: 20rpx;
@@ -96,13 +67,14 @@ const handleCreateDocument = async () => {
     }
 
     .submit-button {
+        margin-top: 20rpx;
         width: 100%;
         height: 80rpx;
         line-height: 80rpx;
         text-align: center;
         background-color: #007aff;
         color: #fff;
-        border-radius: 10rpx;
+        border-radius: 50rpx;
         font-size: 32rpx;
     }
 }

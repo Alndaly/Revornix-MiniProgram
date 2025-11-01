@@ -83,10 +83,8 @@ onReachBottom(async () => {
 <style lang="scss">
 .section-list {
     box-sizing: border-box;
-    padding: 20rpx;
     display: flex;
     flex-direction: column;
-    gap: 100px;
 
     .section-wrapper {
         margin-bottom: 20rpx;
