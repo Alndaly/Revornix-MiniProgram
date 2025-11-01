@@ -1,3 +1,3 @@
-# fitness-app-v2
+# Revornix
 
-新版健身小程序，基于vue3+vite+uniapp开发。
+Revornix小程序端，基于uni-app框架开发。

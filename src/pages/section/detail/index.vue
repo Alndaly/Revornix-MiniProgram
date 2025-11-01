@@ -1,12 +1,12 @@
 <template>
-    <div class="page-container">
-        <div class="description">
-            {{ sectionDetail?.description }}
-        </div>
-        <div class='content'>
-            <towxml :nodes="markdownWxml"></towxml>
-        </div>
+  <div class="page-container">
+    <div class="description">
+      {{ sectionDetail?.description }}
     </div>
+    <div class="content">
+      <towxml :nodes="markdownWxml"></towxml>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
 import type { FileUrlPrefixResponse, SectionInfo } from '@/generated';
@@ -20,7 +20,7 @@ import { FileService } from '@/lib/file-service';
 import { replaceImagePaths } from '@/lib/utils';
 import { getSectionDetail } from '@/service/section';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const towxmlFunc = require('../../../wxcomponents/towxml/index')
+const towxmlFunc = require('../../../wxcomponents/towxml/index');
 
 const userStore = useUserStore();
 
@@ -35,96 +35,101 @@ const markdown = ref('');
 const markdownWxml = ref(null);
 
 const onGetMarkdown = async () => {
-    if (!sectionDetail.value || !userInfo.value) return;
-    if (!userInfo.value?.default_user_file_system) {
-        uni.showToast({
-            title: '当前用户没有默认文件系统',
-        })
-        return;
-    }
-    const fileService = new FileService(userFileSystem.value?.file_system_id!);
+  if (!sectionDetail.value || !userInfo.value) return;
+  if (!userInfo.value?.default_user_file_system) {
+    uni.showToast({
+      title: '当前用户没有默认文件系统',
+    });
+    return;
+  }
+  const fileService = new FileService(userFileSystem.value?.file_system_id!);
 
-    if (!sectionDetail.value?.md_file_name) {
-        uni.showToast({
-            title: '当前文档没有md文件',
-        })
-        return;
+  if (!sectionDetail.value?.md_file_name) {
+    uni.showToast({
+      title: '当前文档没有md文件',
+    });
+    return;
+  }
+  let res = await fileService.getFileContent(sectionDetail.value?.md_file_name);
+  if (typeof res === 'string') {
+    if (userRemoteFileUrlPrefix.value?.url_prefix) {
+      res = replaceImagePaths(res, userRemoteFileUrlPrefix.value.url_prefix);
     }
-    let res = await fileService.getFileContent(sectionDetail.value?.md_file_name)
-    if (typeof res === 'string') {
-        if (userRemoteFileUrlPrefix.value?.url_prefix) {
-            res = replaceImagePaths(res, userRemoteFileUrlPrefix.value.url_prefix);
-        }
-        markdown.value = res;
-    }
-    const parsed = towxmlFunc(markdown.value, 'markdown');
-    markdownWxml.value = parsed;
+    markdown.value = res;
+  }
+  const parsed = towxmlFunc(markdown.value, 'markdown');
+  markdownWxml.value = parsed;
 };
 
 onLoad(async (options) => {
-    if (!options) {
-        throw new Error('当前页面缺少参数传递');
-    }
+  if (!options) {
+    throw new Error('当前页面缺少参数传递');
+  }
 
-    const section = await getSectionDetail({
-        section_id: options.id,
-    });
+  const section = await getSectionDetail({
+    section_id: options.id,
+  });
 
-    sectionDetail.value = section;
-    uni.setNavigationBarTitle({
-        title: section?.title || '专栏详情',
-    });
+  sectionDetail.value = section;
+  uni.setNavigationBarTitle({
+    title: section?.title || '专栏详情',
+  });
 
-    const userInfo = await getMyInfo();
+  const userInfo = await getMyInfo();
 
-    userStore.setUserInfo(userInfo);
+  userStore.setUserInfo(userInfo);
 
-    const userFileSystem = await getUserFileSystemDetail({
-        user_file_system_id: userInfo!.default_user_file_system!,
-    });
+  const userFileSystem = await getUserFileSystemDetail({
+    user_file_system_id: userInfo!.default_user_file_system!,
+  });
 
-    userStore.setUserFileSystem(userFileSystem);
+  userStore.setUserFileSystem(userFileSystem);
 
-    const userRemoteFileUrlPrefixResponse = await getUserFileUrlPrefix({ user_id: section!.creator!.id });
-    userRemoteFileUrlPrefix.value = userRemoteFileUrlPrefixResponse;
+  const userRemoteFileUrlPrefixResponse = await getUserFileUrlPrefix({
+    user_id: section!.creator!.id,
+  });
+  userRemoteFileUrlPrefix.value = userRemoteFileUrlPrefixResponse;
 
-    await onGetMarkdown();
+  await onGetMarkdown();
 });
 
 onShareAppMessage((options) => {
-    return {
-        title: sectionDetail.value?.title ?? '专栏详情',
-        path: `/pages/document/detail/index?id=${sectionDetail.value?.id}`,
-        imageUrl: sectionDetail.value?.cover ?? 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
-    };
-})
+  return {
+    title: sectionDetail.value?.title ?? '专栏详情',
+    path: `/pages/document/detail/index?id=${sectionDetail.value?.id}`,
+    imageUrl:
+      sectionDetail.value?.cover ??
+      'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
+  };
+});
 
 onShareTimeline(() => {
-    return {
-        title: sectionDetail.value?.title ?? '专栏详情',
-        query: `id=${sectionDetail.value?.id}`,
-        imageUrl: sectionDetail.value?.cover ?? 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
-    }
-})
-
+  return {
+    title: sectionDetail.value?.title ?? '专栏详情',
+    query: `id=${sectionDetail.value?.id}`,
+    imageUrl:
+      sectionDetail.value?.cover ??
+      'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
+  };
+});
 </script>
 <style lang="scss">
 .page-container {
+  padding: 20rpx;
+
+  .description {
+    font-size: 28rpx;
+    margin-top: 20rpx;
+    color: #666;
+    border: #666 1px solid;
     padding: 20rpx;
+    border-radius: 20rpx;
+  }
 
-    .description {
-        font-size: 28rpx;
-        margin-top: 20rpx;
-        color: #666;
-        border: #666 1px solid;
-        padding: 20rpx;
-        border-radius: 20rpx;
-    }
-
-    .content {
-        margin-top: 20rpx;
-        font-size: 28rpx;
-        color: #333;
-    }
+  .content {
+    margin-top: 20rpx;
+    font-size: 28rpx;
+    color: #333;
+  }
 }
 </style>
