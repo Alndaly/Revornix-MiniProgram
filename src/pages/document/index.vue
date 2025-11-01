@@ -1,5 +1,4 @@
 <template>
-    <mine-tab-bar />
     <view class='container bg-background'>
         <scroll-view scroll-y class='document-list'>
             <view v-for="(document, idx) in documents" :key="idx" class="document-wrapper">

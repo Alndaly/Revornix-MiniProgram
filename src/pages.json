@@ -66,16 +66,24 @@
 	],
 	"subpackages": [],
 	"tabBar": {
-		"custom": true,
 		"list": [
 			{
-				"pagePath": "pages/document/index"
+				"pagePath": "pages/document/index",
+				"text": "文档",
+				"iconPath": "/static/icon/tabBar/document.png",
+				"selectedIconPath": "/static/icon/tabBar/document_on.png"
 			},
 			{
-				"pagePath": "pages/section/index"
+				"pagePath": "pages/section/index",
+				"text": "专栏",
+				"iconPath": "/static/icon/tabBar/section.png",
+				"selectedIconPath": "/static/icon/tabBar/section_on.png"
 			},
 			{
-				"pagePath": "pages/mine/index"
+				"pagePath": "pages/mine/index",
+				"text": "我的",
+				"iconPath": "/static/icon/tabBar/mine.png",
+				"selectedIconPath": "/static/icon/tabBar/mine_on.png"
 			}
 		]
 	},

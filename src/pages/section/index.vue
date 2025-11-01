@@ -1,5 +1,4 @@
 <template>
-    <mine-tab-bar />
     <view class='container bg-background'>
         <scroll-view scroll-y class='section-list'>
             <view v-for="(section, idx) in sections" :key="idx" class="section-wrapper">
