@@ -57,7 +57,8 @@
     "@miniprogram-component-plus/row": "^1.0.0",
     "pinia": "^3.0.3",
     "vue": "^3.5.22",
-    "vue-i18n": "^9.14.5"
+    "vue-i18n": "^9.14.5",
+    "wot-design-uni": "^1.13.0"
   },
   "devDependencies": {
     "@dcloudio/types": "^3.4.28",
@@ -65,6 +66,7 @@
     "@dcloudio/uni-cli-shared": "3.0.0-4070620250821001",
     "@dcloudio/uni-stacktracey": "3.0.0-4070620250821001",
     "@dcloudio/vite-plugin-uni": "3.0.0-4070620250821001",
+    "@iconify-json/carbon": "^1.2.14",
     "@types/node": "^24.9.2",
     "@uni-helper/unocss-preset-uni": "^0.2.11",
     "@vue/runtime-core": "^3.5.22",
