@@ -56,6 +56,12 @@
 			}
 		},
 		{
+			"path": "pages/webview/revornix.cn/index",
+			"style": {
+				"navigationBarTitleText": "帮助文档"
+			}
+		},
+		{
 			"path": "pages/test/index",
 			"style": {
 				"navigationBarTitleText": "测试",
