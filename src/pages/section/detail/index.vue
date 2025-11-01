@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import type { FileUrlPrefixResponse, SectionInfo } from '@/generated';
 import { getMyInfo } from '@/service/user';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 import { useUserStore } from '@/store/user';
 import { getUserFileSystemDetail, getUserFileUrlPrefix } from '@/service/file-system';
@@ -90,6 +90,22 @@ onLoad(async (options) => {
 
     await onGetMarkdown();
 });
+
+onShareAppMessage((options) => {
+    return {
+        title: sectionDetail.value?.title ?? '专栏详情',
+        path: `/pages/document/detail/index?id=${sectionDetail.value?.id}`,
+        imageUrl: sectionDetail.value?.cover ?? 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
+    };
+})
+
+onShareTimeline(() => {
+    return {
+        title: sectionDetail.value?.title ?? '专栏详情',
+        query: `id=${sectionDetail.value?.id}`,
+        imageUrl: sectionDetail.value?.cover ?? 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
+    }
+})
 
 </script>
 <style lang="scss">

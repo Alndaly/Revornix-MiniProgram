@@ -12,7 +12,7 @@
 import type { DocumentDetailResponse, FileUrlPrefixResponse } from '@/generated';
 import { getDocumentDetail } from '@/service/document';
 import { getMyInfo } from '@/service/user';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onShareAppMessage, onShareTimeline } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 import { useUserStore } from '@/store/user';
 import { getUserFileSystemDetail, getUserFileUrlPrefix } from '@/service/file-system';
@@ -115,6 +115,22 @@ onLoad(async (options) => {
 
     await onGetMarkdown();
 });
+
+onShareAppMessage((options) => {
+    return {
+        title: documentDetail.value?.title ?? '文档详情',
+        path: `/pages/document/detail/index?id=${documentDetail.value?.id}`,
+        imageUrl: documentDetail.value?.cover ?? 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
+    };
+})
+
+onShareTimeline(() => {
+    return {
+        title: documentDetail.value?.title ?? '文档详情',
+        query: `id=${documentDetail.value?.id}`,
+        imageUrl: documentDetail.value?.cover ?? 'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251101140344640.png',
+    }
+})
 
 </script>
 <style lang="scss">
