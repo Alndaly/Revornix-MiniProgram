@@ -1,5 +1,5 @@
 <template>
-    <view class="bg-background container">
+    <view class="bg-muted container">
         <view class="user-info">
             <img :src="'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251019202656912.png'"
                 class="avatar" />

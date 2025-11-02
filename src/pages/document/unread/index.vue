@@ -1,5 +1,5 @@
 <template>
-    <view class='container bg-background'>
+    <view class='container bg-muted'>
         <scroll-view scroll-y class='document-list'>
             <view v-for="(document, idx) in documents" :key="idx" class="document-wrapper">
                 <document-item :document="document" />

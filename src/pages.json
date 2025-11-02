@@ -8,9 +8,39 @@
 	},
 	"pages": [
 		{
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "首页"
+			}
+		},
+		{
+			"path": "pages/document/favorite/index",
+			"style": {
+				"navigationBarTitleText": "收藏文档",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/document/recent-read/index",
+			"style": {
+				"navigationBarTitleText": "最近阅读文档",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/document/unread/index",
+			"style": {
+				"navigationBarTitleText": "未读文档",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
 			"path": "pages/document/mine/index",
 			"style": {
-				"navigationBarTitleText": "文档",
+				"navigationBarTitleText": "我的文档",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 100
 			}
@@ -24,7 +54,23 @@
 		{
 			"path": "pages/section/mine/index",
 			"style": {
-				"navigationBarTitleText": "专栏",
+				"navigationBarTitleText": "我的专栏",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/section/subscribed/index",
+			"style": {
+				"navigationBarTitleText": "订阅专栏",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/section/community/index",
+			"style": {
+				"navigationBarTitleText": "社区专栏",
 				"enablePullDownRefresh": true,
 				"onReachBottomDistance": 100
 			}
@@ -69,8 +115,8 @@
 	"tabBar": {
 		"list": [
 			{
-				"pagePath": "pages/document/mine/index",
-				"text": "文档",
+				"pagePath": "pages/home/index",
+				"text": "首页",
 				"iconPath": "/static/icon/tabBar/document.png",
 				"selectedIconPath": "/static/icon/tabBar/document_on.png"
 			},

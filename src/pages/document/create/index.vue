@@ -1,5 +1,5 @@
 <template>
-    <div class='container bg-background'>
+    <div class='container bg-muted'>
         <div class="flex-1">
             <div class='bg-white form rounded-lg overflow-hidden'>
                 <wd-cell-group title="文档基础信息">

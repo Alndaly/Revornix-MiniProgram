@@ -1,5 +1,5 @@
 <template>
-    <div class="container bg-background">
+    <div class="container bg-muted">
         <div class="description">
             {{ documentDetail?.description ? documentDetail?.description : '该文档暂无描述' }}
         </div>

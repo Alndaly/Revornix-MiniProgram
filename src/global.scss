@@ -8,12 +8,52 @@ button {
     box-sizing: border-box;
 }
 
-.bg-background {
+.bg-white {
+    background-color: #fff;
+}
+
+.bg-muted {
     background-color: #f5f5f5;
 }
 
-.bg-white {
-    background-color: #fff;
+.text-black {
+    color: #000;
+}
+
+.text-muted {
+    color: #999;
+}
+
+.text-primary {
+    color: #007aff;
+}
+
+.text-secondary {
+    color: #666;
+}
+
+.text-success {
+    color: #5cb85c;
+}
+
+.text-danger {
+    color: #d9534f;
+}
+
+.text-warning {
+    color: #f0ad4e;
+}
+
+.text-info {
+    color: #5bc0de;
+}
+
+.text-light {
+    color: #f8f8f8;
+}
+
+.flex {
+    display: flex;
 }
 
 .flex-1 {
@@ -28,6 +68,34 @@ button {
 .flex-col {
     display: flex;
     flex-direction: column;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-justify {
+    text-align: justify;
 }
 
 .overflow-auto {
@@ -91,6 +159,26 @@ button {
     font-size: 28rpx;
 }
 
+.text-xs {
+    font-size: 24rpx;
+}
+
 .font-bold {
     font-weight: bold;
+}
+
+.p-1 {
+    padding: 20rpx;
+}
+
+.p-2 {
+    padding: 40rpx;
+}
+
+.mb-1 {
+    margin-bottom: 20rpx;
+}
+
+.mb-2 {
+    margin-bottom: 40rpx;
 }

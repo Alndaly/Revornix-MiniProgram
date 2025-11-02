@@ -1,5 +1,5 @@
 <template>
-    <view class='container bg-background'>
+    <view class='container bg-muted'>
         <scroll-view scroll-y class='section-list'>
             <view v-for="(section, idx) in sections" :key="idx" class="section-wrapper">
                 <section-item :section="section" />
