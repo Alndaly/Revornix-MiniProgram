@@ -1,6 +1,10 @@
 <template>
-    <view class='container bg-muted'>
-        <scroll-view scroll-y class='document-list'>
+    <view class='container flex' :class='documents.length > 0 && "bg-muted"'>
+        <div v-if='documents.length === 0' class='flex flex-col justify-center items-center flex-1 text-sm'>
+            <uni-icons class='mb-1 opacity-50' custom-prefix="iconfont" type="icon-empty" size="70"></uni-icons>
+            没有任何未读文档啦
+        </div>
+        <scroll-view scroll-y class='document-list' v-else>
             <view v-for="(document, idx) in documents" :key="idx" class="document-wrapper">
                 <document-item :document="document" />
             </view>

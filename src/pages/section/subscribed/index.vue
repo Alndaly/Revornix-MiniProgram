@@ -1,6 +1,10 @@
 <template>
-    <view class='container bg-muted'>
-        <scroll-view scroll-y class='section-list'>
+    <view class='container flex' :class='sections.length > 0 && "bg-muted"'>
+        <div v-if='sections.length === 0' class='flex flex-col justify-center items-center flex-1 text-sm'>
+            <uni-icons class='mb-1 opacity-50' custom-prefix="iconfont" type="icon-empty" size="70"></uni-icons>
+            你当前没订阅任何专栏
+        </div>
+        <scroll-view scroll-y class='section-list' v-else>
             <view v-for="(section, idx) in sections" :key="idx" class="section-wrapper">
                 <section-item :section="section" />
             </view>

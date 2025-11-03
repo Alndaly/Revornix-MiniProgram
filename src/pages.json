@@ -8,9 +8,9 @@
 	},
 	"pages": [
 		{
-			"path": "pages/home/index",
+			"path": "pages/document/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "文档"
 			}
 		},
 		{
@@ -49,6 +49,12 @@
 			"path": "pages/document/create/index",
 			"style": {
 				"navigationBarTitleText": "创建文档"
+			}
+		},
+		{
+			"path": "pages/section/index",
+			"style": {
+				"navigationBarTitleText": "专栏"
 			}
 		},
 		{
@@ -115,13 +121,13 @@
 	"tabBar": {
 		"list": [
 			{
-				"pagePath": "pages/home/index",
-				"text": "首页",
+				"pagePath": "pages/document/index",
+				"text": "文档",
 				"iconPath": "/static/icon/tabBar/document.png",
 				"selectedIconPath": "/static/icon/tabBar/document_on.png"
 			},
 			{
-				"pagePath": "pages/section/mine/index",
+				"pagePath": "pages/section/index",
 				"text": "专栏",
 				"iconPath": "/static/icon/tabBar/section.png",
 				"selectedIconPath": "/static/icon/tabBar/section_on.png"

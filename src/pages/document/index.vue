@@ -6,9 +6,14 @@
                 <div class='text-xs' @click='handleNavigateToDocumentList("unread")'>查看更多</div>
             </div>
             <div class='document-list'>
-                <div v-for="document in unreadDocuments" :key="document.id" class='line-clamp-2 text-sm document-item'
-                    @click='navigateToDocumentDetail(document.id)'>
-                    {{ document.title }}
+                <div v-if='unreadDocuments.length === 0' class='text-sm'>
+                    暂时没有未读文档哦
+                </div>
+                <div v-else>
+                    <div v-for="document in unreadDocuments" :key="document.id"
+                        class='line-clamp-2 text-sm document-item' @click='navigateToDocumentDetail(document.id)'>
+                        {{ document.title }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -18,9 +23,14 @@
                 <div class='text-xs' @click='handleNavigateToDocumentList("recent-read")'>查看更多</div>
             </div>
             <div class='document-list'>
-                <div v-for="document in recentDocuments" :key="document.id" class='line-clamp-2 text-sm document-item'
-                    @click='navigateToDocumentDetail(document.id)'>
-                    {{ document.title }}
+                <div v-if='recentDocuments.length === 0' class='text-sm'>
+                    你最近没有阅读文档哦
+                </div>
+                <div v-else>
+                    <div v-for="document in recentDocuments" :key="document.id"
+                        class='line-clamp-2 text-sm document-item' @click='navigateToDocumentDetail(document.id)'>
+                        {{ document.title }}
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,9 +40,14 @@
                 <div class='text-xs' @click='handleNavigateToDocumentList("favorite")'>查看更多</div>
             </div>
             <div class='document-list'>
-                <div v-for="document in starDocuments" :key="document.id" class='line-clamp-2 text-sm document-item'
-                    @click='navigateToDocumentDetail(document.id)'>
-                    {{ document.title }}
+                <div v-if='starDocuments.length === 0' class='text-sm'>
+                    你没有收藏文档哦
+                </div>
+                <div v-else>
+                    <div v-for="document in starDocuments" :key="document.id" class='line-clamp-2 text-sm document-item'
+                        @click='navigateToDocumentDetail(document.id)'>
+                        {{ document.title }}
+                    </div>
                 </div>
             </div>
         </div>
