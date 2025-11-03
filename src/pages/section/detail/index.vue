@@ -4,7 +4,10 @@
       {{ sectionDetail?.description ? sectionDetail.description : '该专栏暂无描述' }}
     </div>
     <div class="content">
-      <towxml :nodes="markdownWxml"></towxml>
+      <div v-if='markdownError'>
+        {{ markdownError }}
+      </div>
+      <towxml v-else :nodes="markdownWxml"></towxml>
     </div>
   </div>
 </template>
@@ -19,6 +22,7 @@ import { storeToRefs } from 'pinia';
 import { FileService } from '@/lib/file-service';
 import { replaceImagePaths } from '@/lib/utils';
 import { getSectionDetail } from '@/service/section';
+import { utils } from '@kinda/utils';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const towxmlFunc = require('../../../wxcomponents/towxml/index');
 
@@ -31,6 +35,8 @@ const sectionDetail = ref<SectionInfo | null>(null);
 const userRemoteFileUrlPrefix = ref<FileUrlPrefixResponse | null>(null);
 
 const markdown = ref('');
+
+const markdownError = ref('');
 
 const markdownWxml = ref(null);
 
@@ -50,7 +56,11 @@ const onGetMarkdown = async () => {
     });
     return;
   }
-  let res = await fileService.getFileContent(sectionDetail.value?.md_file_name);
+  let [res, err] = await utils.to(fileService.getFileContent(sectionDetail.value?.md_file_name));
+  if (err) {
+    markdownError.value = err;
+    return;
+  }
   if (typeof res === 'string') {
     if (userRemoteFileUrlPrefix.value?.url_prefix) {
       res = replaceImagePaths(res, userRemoteFileUrlPrefix.value.url_prefix);
@@ -117,7 +127,7 @@ onShareTimeline(() => {
 .container {
   padding: 20rpx;
   padding-bottom: calc(env(safe-area-inset-bottom) + 20rpx);
-  
+
   .description {
     background-color: white;
     font-size: 28rpx;

@@ -4,7 +4,10 @@
             {{ documentDetail?.description ? documentDetail?.description : '该文档暂无描述' }}
         </div>
         <div class='content'>
-            <towxml :nodes="markdownWxml"></towxml>
+            <div v-if='markdownGetError'>
+                {{ markdownGetError }}
+            </div>
+            <towxml v-else :nodes="markdownWxml"></towxml>
         </div>
     </div>
 </template>
@@ -20,6 +23,7 @@ import { storeToRefs } from 'pinia';
 import { FileService } from '@/lib/file-service';
 import { replaceImagePaths } from '@/lib/utils';
 import { DocumentCategory } from '@/enums/document';
+import { utils } from '@kinda/utils';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const towxmlFunc = require('../../../wxcomponents/towxml/index')
 
@@ -33,6 +37,8 @@ const userRemoteFileUrlPrefix = ref<FileUrlPrefixResponse | null>(null);
 
 const markdown = ref('');
 
+const markdownGetError = ref('');
+
 const markdownWxml = ref(null);
 
 const onGetMarkdown = async () => {
@@ -44,7 +50,7 @@ const onGetMarkdown = async () => {
         return;
     }
     const fileService = new FileService(userFileSystem.value?.file_system_id!);
-    let res = null;
+    let res, err = null;
     switch (documentDetail.value?.category) {
         case DocumentCategory.FILE:
             if (!documentDetail.value.file_info?.md_file_name) {
@@ -53,7 +59,7 @@ const onGetMarkdown = async () => {
                 })
                 return;
             }
-            res = await fileService.getFileContent(documentDetail.value.file_info?.md_file_name)
+            [res, err] = await utils.to(fileService.getFileContent(documentDetail.value.file_info?.md_file_name))
             break;
         case DocumentCategory.QUICK_NOTE:
             if (!documentDetail.value.quick_note_info?.content) {
@@ -71,10 +77,14 @@ const onGetMarkdown = async () => {
                 })
                 return;
             }
-            res = await fileService.getFileContent(documentDetail.value.website_info?.md_file_name)
+            [res, err] = await utils.to(fileService.getFileContent(documentDetail.value.website_info?.md_file_name))
             break;
         default:
             break;
+    }
+    if (err) {
+        markdownGetError.value = err
+        return
     }
     if (typeof res === 'string') {
         if (userRemoteFileUrlPrefix.value?.url_prefix) {
