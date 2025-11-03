@@ -1,6 +1,7 @@
 import cache from "./cache";
 import { URL } from "../config/base";
 import type { TokenResponse } from "@/generated";
+import { utils } from "@kinda/utils";
 
 // 定义请求参数接口
 interface RequestParams {
@@ -8,71 +9,54 @@ interface RequestParams {
     method?: "GET" | "POST" | "PUT" | "DELETE" | "OPTIONS" | "HEAD" | "TRACE" | "CONNECT";
     data?: any;
     header?: Record<string, string>;
-    dataType?: string;
-    responseType?: string;
-    success?: (result: any) => void;
-    fail?: (error: any) => void;
-    complete?: () => void;
 }
 
-// Token管理状态接口
-interface TokenState {
-    isRefreshing: boolean;    // 是否正在刷新token
-    subscribers: Array<() => void>; // 等待token刷新的请求队列
-    hasToken: boolean;        // 是否有有效token
-    tokenChecked: boolean;    // 是否已检查过token
-}
-
-// Token管理状态
-const tokenState: TokenState = {
-    isRefreshing: false,
-    subscribers: [],
-    hasToken: false,
-    tokenChecked: false,
-};
+let isRefreshing = false;
+let tokenRefreshTimes = 0;
+let subscribers: Array<() => void> = [];
 
 // 无需token的API路径列表
 const NO_AUTH_APIS: string[] = [];
 
 // 检查URL是否需要认证
 function requiresAuth(url: string): boolean {
-    return !NO_AUTH_APIS.some(api =>
-        url.endsWith(api) ||
-        (api.includes('*') && new RegExp(api.replace('*', '.*')).test(url))
-    );
+    return !NO_AUTH_APIS.some((api: string) => {
+        return url.endsWith(api) || (api.includes('*') && new RegExp(api.replace('*', '.*')).test(url))
+    });
 }
 
 // 处理token过期或无token情况
-function handleTokenIssue(params: RequestParams): Promise<null> {
-    // 将当前请求加入订阅队列
-    return new Promise((resolve) => {
-        addSubscriber(() => {
-            resolve(request(params));
-        });
-
-        // 如果不在刷新中，则开始刷新/获取token
-        if (!tokenState.isRefreshing) {
-            tokenState.isRefreshing = true;
-            updateToken().finally(() => {
-                tokenState.isRefreshing = false;
-            });
-        }
+function handleTokenIssue(params: RequestParams): Promise<any> {
+    const promise = new Promise((resolve) => {
+        // 将当前请求加入订阅队列
+        addSubscriber(() => resolve(request(params)));
     });
+    // 如果不在刷新中，则开始刷新/获取token
+    if (!isRefreshing) {
+        updateToken();
+    }
+    return promise
 }
 
 // 添加请求到订阅队列
 function addSubscriber(callback: () => void): void {
-    tokenState.subscribers.push(callback);
+    subscribers.push(callback);
 }
 
-// 执行所有订阅的请求
+// 执行所有被推迟的请求
 function onAccessTokenFetched(): void {
-    tokenState.subscribers.forEach(callback => callback());
-    tokenState.subscribers = [];
+    subscribers.forEach(callback => callback());
+    subscribers = []
 }
 
 // 请求函数封装
 export const request = function (args: RequestParams): Promise<any> {
+    // 如果正在刷新 那么直接将任务加入延迟队列
+    if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+            addSubscriber(() => resolve(request(args)))
+        })
+    }
     // 构建请求头
     let header: Record<string, string> = {
         "Accept-Encoding": "gzip, deflate, br",
@@ -95,18 +79,15 @@ export const request = function (args: RequestParams): Promise<any> {
                 if (res.statusCode === 401) {
                     resolve(handleTokenIssue(args));
                     return;
-                } else if (res.statusCode >= 300) {
-                    reject(res.errMsg);
+                } else if (res.statusCode >= 300 || res.statusCode < 200) {
+                    reject(res);
                     return;
                 }
                 resolve(res.data);
             },
             fail: (err) => {
-                reject(err.errMsg);
-                uni.showToast({
-                    title: err.errMsg ? err.errMsg : "请求失败",
-                    icon: "error",
-                });
+                reject(err);
+                return;
             },
             complete: (res) => {
                 console.log("请求结果:", res, "参数:", args);
@@ -115,118 +96,97 @@ export const request = function (args: RequestParams): Promise<any> {
     });
 };
 
-// 显示重新登录模态框
-function showReloginModal(): void {
-    uni.showModal({
-        showCancel: false,
-        title: "提醒",
-        content: "请重新登录",
-        success(res) {
-            cache.clear();
-            if (res.confirm) {
-                uni.navigateTo({
-                    url: "/pages/authPage/index"
-                });
+// 更新Token
+async function updateToken(): Promise<any> {
+    if (tokenRefreshTimes >= 3) {
+        uni.showModal({
+            title: "提示",
+            content: "Token刷新次数过多，需要重新登录",
+            showCancel: false,
+            success: (res) => {
+                if (res.confirm) {
+                    cache.clear()
+                    uni.reLaunch({ url: "/pages/document/index" })
+                }
             }
-        },
-    });
-}
+        })
+        return
+    }
+    isRefreshing = true;
+    tokenRefreshTimes += 1;
+    console.log(`开始更新Token, 当前第${tokenRefreshTimes}次`);
 
-// 获取Token
-async function getToken(): Promise<void> {
-    console.log("开始获取Token");
-    try {
-        const loginResult = await new Promise<UniApp.LoginRes>((resolve, reject) => {
-            uni.login({
-                success: resolve,
-                fail: reject
-            });
-        });
+    // 如果连access_token都没有的话就说明用户本地认证信息没有，直接获取新Token
+    const accessToken = cache.directGet("access_token");
+    if (!accessToken) {
+        return getToken();
+    }
 
-        const res_token = await uni.request({
-            url: URL.API_URL + "/user/create/wechat/mini",
-            data: {
-                code: loginResult.code,
-            },
-            method: "POST",
-        });
-        console.log("获取个人唯一识别Token: ", res_token);
+    const refreshToken = cache.get("refresh_token");
+    if (!refreshToken) {
+        return Promise.reject("无刷新Token，需要重新登录");
+    }
 
-        if (res_token.statusCode !== 200) {
-            throw new Error(`获取Token失败, ${res_token.errMsg ? res_token.errMsg : "未知错误"}`);
-        }
+    const [res_token, err_token] = await utils.to(uni.request({
+        url: URL.API_URL + "/user/token/update",
+        data: { refresh_token: refreshToken },
+        method: "POST",
+    }));
 
+    if (err_token || !res_token || res_token.statusCode !== 200) {
+        console.error("Token刷新失败", err_token || res_token);
+        return Promise.resolve(updateToken());
+    }
+
+    console.log("Token刷新结果:", res_token);
+
+    if (res_token.statusCode === 200) {
         const res_token_data = res_token.data as TokenResponse;
-        // 存储Token
+        // 存储新的Token
         cache.set(
             "access_token",
             res_token_data.access_token,
             res_token_data.expires_in
         );
         cache.set("refresh_token", res_token_data.refresh_token);
-
-        console.log("Token获取完成");
-        tokenState.hasToken = true;
-        tokenState.tokenChecked = true;
+        console.log("Token刷新完成");
+        isRefreshing = false;
+        tokenRefreshTimes = 0;
 
         // 执行所有等待的请求
         onAccessTokenFetched();
-    } catch (err) {
-        console.error("Token获取失败", err);
     }
+
 }
 
-// 更新Token
-async function updateToken(): Promise<void> {
-    console.log("开始更新Token");
+// 获取Token
+async function getToken(): Promise<any> {
+    const loginResult = await uni.login();
 
-    const accessToken = cache.directGet("access_token");
-    if (!accessToken) {
-        console.log("无有效Token，转向获取新Token");
-        return getToken();
+    const res_token = await uni.request({
+        url: URL.API_URL + "/user/create/wechat/mini",
+        data: {
+            code: loginResult.code,
+        },
+        method: "POST",
+    });
+    console.log("获取个人唯一识别Token: ", res_token);
+
+    if (res_token.statusCode !== 200) {
+        return Promise.reject(`Token获取失败，${res_token}`)
     }
 
-    const refreshToken = cache.get("refresh_token");
-    if (!refreshToken) {
-        console.log("无刷新Token，需要重新登录");
-        showReloginModal();
-        return;
-    }
+    const res_token_data = res_token.data as TokenResponse;
+    // 存储Token
+    cache.set(
+        "access_token",
+        res_token_data.access_token,
+        res_token_data.expires_in
+    );
+    cache.set("refresh_token", res_token_data.refresh_token);
 
-    try {
-        const res_token = await new Promise<any>((resolve, reject) => {
-            uni.request({
-                url: URL.API_URL + "/user/token/update",
-                data: { refresh_token: refreshToken },
-                method: "POST",
-                success: resolve,
-                fail: reject,
-            });
-        });
+    console.log("Token获取完成");
 
-        console.log("Token刷新结果:", res_token);
-
-        if (res_token.statusCode === 200) {
-            // 存储新的Token
-            cache.set(
-                "access_token",
-                res_token.data.access_token,
-                res_token.data.expires_in
-            );
-            cache.set("refresh_token", res_token.data.refresh_token);
-
-            console.log("Token更新完成");
-            tokenState.hasToken = true;
-
-            // 执行所有等待的请求
-            onAccessTokenFetched();
-        } else if (res_token.statusCode === 401) {
-            console.log("Token更新失败，需要重新登录");
-            showReloginModal();
-        } else {
-            console.error("刷新Token未知错误", res_token);
-        }
-    } catch (err) {
-        console.error("刷新Token请求失败", err);
-    }
+    // 执行所有等待的请求
+    onAccessTokenFetched();
 }

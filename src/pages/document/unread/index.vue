@@ -18,6 +18,7 @@ import { searchUserUnreadDocument } from '@/service/document';
 import { onLoad, onPullDownRefresh, onReachBottom } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 import { useTabStore } from '@/store/tab'
+import { utils } from '@kinda/utils';
 
 const tabStore = useTabStore()
 tabStore.switchTab(0)
@@ -30,17 +31,25 @@ let has_more = ref(true);
 let documents = ref<DocumentInfo[]>([]);
 
 onLoad(async () => {
-    const data = await searchUserUnreadDocument({
+    const [res, err] = await utils.to(searchUserUnreadDocument({
         start: start.value,
         limit: limit.value,
         keyword: keyword.value,
         desc: desc.value
-    })
+    }))
 
-    documents.value = data.elements
-    has_more.value = data.has_more
-    if (data.next_start) {
-        start.value = data.next_start
+    if (err || !res) {
+        uni.showToast({
+            title: err?.data?.detail || '获取未读文档失败',
+            icon: 'error'
+        })
+        return
+    }
+
+    documents.value = res.elements
+    has_more.value = res.has_more
+    if (res.next_start) {
+        start.value = res.next_start
     }
 })
 
