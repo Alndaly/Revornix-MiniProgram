@@ -45,8 +45,12 @@ function addSubscriber(callback: () => void): void {
 
 // 执行所有被推迟的请求
 function onAccessTokenFetched(): void {
-    subscribers.forEach(callback => callback());
+    console.log(`Token刷新完成，执行${subscribers.length}个被推迟的请求`)
+    subscribers.forEach(callback => {
+        callback()
+    });
     subscribers = []
+    console.log(`执行完毕，当前队列长度：${subscribers.length}`)
 }
 
 // 请求函数封装
@@ -118,8 +122,10 @@ async function updateToken(): Promise<any> {
 
     // 如果连access_token都没有的话就说明用户本地认证信息没有，直接获取新Token
     const accessToken = cache.directGet("access_token");
+
     if (!accessToken) {
-        return getToken();
+        getToken();
+        return
     }
 
     const refreshToken = cache.get("refresh_token");
@@ -173,7 +179,7 @@ async function getToken(): Promise<any> {
     console.log("获取个人唯一识别Token: ", res_token);
 
     if (res_token.statusCode !== 200) {
-        return Promise.reject(`Token获取失败，${res_token}`)
+        return Promise.resolve(updateToken())
     }
 
     const res_token_data = res_token.data as TokenResponse;
@@ -186,6 +192,8 @@ async function getToken(): Promise<any> {
     cache.set("refresh_token", res_token_data.refresh_token);
 
     console.log("Token获取完成");
+    isRefreshing = false;
+    tokenRefreshTimes = 0;
 
     // 执行所有等待的请求
     onAccessTokenFetched();
