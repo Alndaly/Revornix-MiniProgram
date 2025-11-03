@@ -1,16 +1,19 @@
 <template>
     <view class="bg-muted container">
-        <view class="user-info">
-            <img :src="'https://qingyon-revornix-public.oss-cn-beijing.aliyuncs.com/images/20251019202656912.png'"
+        <view class="rounded-lg p-2 mb-1 flex flex-col justify-center items-center">
+            <img :src="myInfo?.avatar ? myInfo?.avatar : '/static/icon/Revornix_logo_inverted_output.png'"
                 class="avatar" />
-            <view class='nickname'>
-                {{ myInfo?.nickname }}
-            </view>
-            <view>
-                {{ myInfo?.slogan ? myInfo.slogan : '暂无签名' }}
-            </view>
+            <div class='flex flex-row text-sm'>
+                <div>粉丝 {{ myInfo?.fans ? myInfo.fans : 0 }}</div>
+                <div class='mx-1'>|</div>
+                <div>关注 {{ myInfo?.follows ? myInfo.follows : 0 }}</div>
+            </div>
         </view>
-        <view class='help'>
+        <view class='rounded-lg bg-white p-1 mb-1'>
+            <wd-cell title="昵称" :value='myInfo?.nickname ? myInfo.nickname : "暂无昵称"' />
+            <wd-cell title="个性签名" :value='myInfo?.slogan ? myInfo.slogan : "暂无签名"' />
+        </view>
+        <view class='rounded-lg bg-white p-1 mb-1'>
             <wd-cell title="帮助文档" is-link to="/pages/webview/revornix.cn/index" />
             <wd-cell title="交流群组" is-link @click='onShowGroupCode' />
             <wd-action-sheet v-model="showGroupCode" title="交流群组" @close="onHideGroupCode">
@@ -20,10 +23,10 @@
                 </view>
             </wd-action-sheet>
         </view>
-        <view class='extra'>
+        <view class='rounded-lg bg-white p-1 mb-1'>
             <wd-cell title="UUID" center>
                 <view class='text-xs' selectable="true">
-                    {{ myInfo?.uuid }}
+                    {{ myInfo?.uuid ? myInfo.uuid : '暂无UUID' }}
                 </view>
             </wd-cell>
         </view>
@@ -36,6 +39,7 @@ import { getMyInfo } from '@/service/user';
 import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 import { useTabStore } from '@/store/tab';
+import { utils } from '@kinda/utils';
 
 const showGroupCode = ref(false);
 
@@ -55,7 +59,14 @@ const onHideGroupCode = () => {
 }
 
 onLoad(async () => {
-    const res = await getMyInfo();
+    const [res, err] = await utils.to(getMyInfo());
+    if (err) {
+        uni.showToast({
+            title: '获取用户信息失败',
+            icon: 'error'
+        })
+        return
+    }
     myInfo.value = res;
 });
 
@@ -67,61 +78,12 @@ onPullDownRefresh(async () => {
 </script>
 
 <style lang="scss">
-.user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30rpx;
-    background-color: white;
-    border-radius: 20rpx;
+.avatar {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 50%;
+    object-fit: cover;
     margin-bottom: 20rpx;
-
-    .avatar {
-        width: 120rpx;
-        height: 120rpx;
-        border-radius: 50%;
-        object-fit: cover;
-        margin-bottom: 20rpx;
-        border: 2rpx solid #eaeaea;
-    }
-
-    .nickname {
-        font-size: 36rpx;
-        font-weight: bold;
-    }
-}
-
-.help {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 20rpx;
-    background-color: white;
-    border-radius: 20rpx;
-    margin-bottom: 20rpx;
-}
-
-.extra {
-    display: flex;
-    justify-content: space-around;
-    padding: 20rpx;
-    background-color: white;
-    border-radius: 20rpx;
-    margin-bottom: 20rpx;
-}
-
-.code-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30rpx;
-
-    .code {
-        width: 340rpx;
-        height: 340rpx;
-        object-fit: cover;
-        border-radius: 10rpx;
-        margin: auto;
-    }
+    border: 2rpx solid #eaeaea;
 }
 </style>

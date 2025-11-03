@@ -118,6 +118,10 @@ button {
     border-radius: 24rpx;
 }
 
+.rounded-full {
+    border-radius: 50%;
+}
+
 .container {
     padding: 20rpx;
     box-sizing: border-box;
@@ -193,6 +197,16 @@ button {
 
 .w-full {
     width: 100%;
+}
+
+.mx-1 {
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+}
+
+.mx-2 {
+    margin-left: 40rpx;
+    margin-right: 40rpx;
 }
 
 .mx-auto {

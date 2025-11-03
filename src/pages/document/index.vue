@@ -6,7 +6,8 @@
                 <div class='text-xs' @click='handleNavigateToDocumentList("unread")'>查看更多</div>
             </div>
             <div class='document-list'>
-                <div v-if='unreadDocuments.length === 0' class='text-sm'>
+                <div v-if='unreadDocuments.length === 0' class='text-sm flex flex-col justify-center items-center'>
+                    <uni-icons class='mb-1 opacity-50' custom-prefix="iconfont" type="icon-empty" size="50"></uni-icons>
                     暂时没有未读文档哦
                 </div>
                 <div v-else>
@@ -23,7 +24,8 @@
                 <div class='text-xs' @click='handleNavigateToDocumentList("recent-read")'>查看更多</div>
             </div>
             <div class='document-list'>
-                <div v-if='recentDocuments.length === 0' class='text-sm'>
+                <div v-if='recentDocuments.length === 0' class='text-sm flex flex-col justify-center items-center'>
+                    <uni-icons class='mb-1 opacity-50' custom-prefix="iconfont" type="icon-empty" size="50"></uni-icons>
                     你最近没有阅读文档哦
                 </div>
                 <div v-else>
@@ -40,7 +42,8 @@
                 <div class='text-xs' @click='handleNavigateToDocumentList("favorite")'>查看更多</div>
             </div>
             <div class='document-list'>
-                <div v-if='starDocuments.length === 0' class='text-sm'>
+                <div v-if='starDocuments.length === 0' class='text-sm flex flex-col justify-center items-center'>
+                    <uni-icons class='mb-1 opacity-50' custom-prefix="iconfont" type="icon-empty" size="50"></uni-icons>
                     你没有收藏文档哦
                 </div>
                 <div v-else>
