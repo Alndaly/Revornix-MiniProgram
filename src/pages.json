@@ -109,6 +109,12 @@
 			}
 		},
 		{
+			"path": "pages/error/index",
+			"style": {
+				"navigationBarTitleText": "错误"
+			}
+		},
+		{
 			"path": "pages/test/index",
 			"style": {
 				"navigationBarTitleText": "测试",
