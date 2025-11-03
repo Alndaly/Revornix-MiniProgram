@@ -22,7 +22,7 @@
         </view>
         <view class='extra'>
             <wd-cell title="UUID" center>
-                <view class='text-sm'>
+                <view class='text-xs' selectable="true">
                     {{ myInfo?.uuid }}
                 </view>
             </wd-cell>
@@ -33,7 +33,7 @@
 <script lang="ts" setup>
 import type { PrivateUserInfo } from '@/generated';
 import { getMyInfo } from '@/service/user';
-import { onLoad } from '@dcloudio/uni-app';
+import { onLoad, onPullDownRefresh } from '@dcloudio/uni-app';
 import { ref } from 'vue';
 import { useTabStore } from '@/store/tab';
 
@@ -58,6 +58,12 @@ onLoad(async () => {
     const res = await getMyInfo();
     myInfo.value = res;
 });
+
+onPullDownRefresh(async () => {
+    const res = await getMyInfo();
+    myInfo.value = res;
+    uni.stopPullDownRefresh();
+})
 </script>
 
 <style lang="scss">
